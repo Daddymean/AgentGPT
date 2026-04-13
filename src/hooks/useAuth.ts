@@ -9,8 +9,8 @@ const UUID_KEY = "uuid";
 type Provider = "google" | "github";
 
 interface Auth {
-  signIn: (provider?: Provider) => any;
-  signOut: () => any;
+  signIn: (provider?: Provider) => Promise<SignInResponse | undefined>;
+  signOut: () => Promise<void>;
   status: "authenticated" | "unauthenticated" | "loading";
   session: Session | null;
 }
@@ -29,10 +29,10 @@ export function useAuth(): Auth {
       .catch(() => undefined);
   }, [session, status]);
 
-  const handleSignIn = async () => await signIn();
+  const handleSignIn = async (provider?: Provider) => await signIn(provider);
 
   const handleSignOut = async () => {
-    return await signOut({
+    await signOut({
       callbackUrl: "/",
     }).catch();
   };
