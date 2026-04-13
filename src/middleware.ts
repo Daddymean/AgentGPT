@@ -7,17 +7,8 @@ export const config = {
   matcher: "/api/agent/:path*",
 };
 
-function ipFallback(request: Request) {
-  const xff = request.headers.get("x-forwarded-for");
-  return xff
-    ? Array.isArray(xff)
-      ? (xff[0] as string)
-      : xff.split(",")[0]
-    : "127.0.0.1";
-}
-
 async function shouldRateLimit(request: NextRequest): Promise<boolean> {
-  const ip = ipAddress(request) || ipFallback(request);
+  const ip = request.ip ?? ipAddress(request) ?? "127.0.0.1";
   if (!ip) {
     return false;
   }
