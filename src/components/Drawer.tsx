@@ -59,7 +59,7 @@ const Drawer = ({
   }, []);
 
   const sub = api.account.subscribe.useMutation({
-    onSuccess: async (url: any) => {
+    onSuccess: async (url: string | null) => {
       if (!url) return;
       await router.push(url);
     },
@@ -70,7 +70,7 @@ const Drawer = ({
   });
 
   const manage = api.account.manage.useMutation({
-    onSuccess: async (url: any) => {
+    onSuccess: async (url: string | null) => {
       if (!url) return;
       await router.push(url);
     },
