@@ -21,7 +21,8 @@ export const config = {
 };
 
 const cors = Cors({
-  allowMethods: ["POST", "HEAD"],
+  allowMethods: ["POST"],
+  origin: env.NEXTAUTH_URL,
 });
 
 function success(res: NextApiResponse) {
