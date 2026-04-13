@@ -31,8 +31,7 @@ const loadSettings = () => {
     const obj = JSON.parse(data) as ModelSettings;
     Object.entries(obj).forEach(([key, value]) => {
       if (settings.hasOwnProperty(key)) {
-        // @ts-ignore
-        settings[key] = value;
+        settings[key as keyof ModelSettings] = value as never;
       }
     });
   } catch (error) {}
