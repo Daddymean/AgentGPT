@@ -48,9 +48,9 @@ export const agentRouter = createTRPCRouter({
       take: 20,
     });
   }),
-  findById: publicProcedure.input(z.string()).query(async ({ input, ctx }) => {
+  findById: protectedProcedure.input(z.string()).query(async ({ input, ctx }) => {
     const agent = await prisma.agent.findFirstOrThrow({
-      where: { id: input, deleteDate: null },
+      where: { id: input, deleteDate: null, userId: ctx.session?.user?.id },
       include: {
         tasks: {
           orderBy: {
