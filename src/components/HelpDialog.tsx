@@ -40,7 +40,11 @@ export default function HelpDialog({
           <div
             className="cursor-pointer rounded-full bg-black/30 p-3 hover:bg-black/70"
             onClick={() =>
-              window.open("https://discord.gg/jdSBAnmdnY", "_blank")
+              window.open(
+                "https://discord.gg/jdSBAnmdnY",
+                "_blank",
+                "noopener,noreferrer"
+              )
             }
           >
             <FaDiscord size={30} />
@@ -50,7 +54,8 @@ export default function HelpDialog({
             onClick={() =>
               window.open(
                 "https://twitter.com/asimdotshrestha/status/1644883727707959296",
-                "_blank"
+                "_blank",
+                "noopener,noreferrer"
               )
             }
           >
@@ -59,7 +64,11 @@ export default function HelpDialog({
           <div
             className="cursor-pointer rounded-full bg-black/30 p-3 hover:bg-black/70"
             onClick={() =>
-              window.open("https://github.com/reworkd/AgentGPT", "_blank")
+              window.open(
+                "https://github.com/reworkd/AgentGPT",
+                "_blank",
+                "noopener,noreferrer"
+              )
             }
           >
             <FaGithub size={30} />

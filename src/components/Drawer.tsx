@@ -82,7 +82,7 @@ const Drawer = ({
 
   const handleSupport = () => {
     const donationUrl = "https://github.com/sponsors/reworkd-admin";
-    window.open(donationUrl, "_blank");
+    window.open(donationUrl, "_blank", "noopener,noreferrer");
   };
 
   const userAgents = query.data ?? [];
@@ -210,6 +210,7 @@ const DrawerItem = (props: DrawerItemProps) => {
         )}
         href={href}
         target={target ?? "_blank"}
+        rel="noopener noreferrer"
       >
         {icon}
         {!props.small && <span className="text-md ml-4">{text}</span>}
