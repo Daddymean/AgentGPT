@@ -1,6 +1,20 @@
 import { extractArray } from "../src/utils/helpers";
+import { describe, it, expect, spyOn, beforeEach, afterEach } from "bun:test";
 
 describe("Strings should be extracted from arrays correctly", () => {
+  let consoleErrorSpy: any;
+  let consoleWarnSpy: any;
+
+  beforeEach(() => {
+    consoleErrorSpy = spyOn(console, "error").mockImplementation(() => {});
+    consoleWarnSpy = spyOn(console, "warn").mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    consoleErrorSpy.mockRestore();
+    consoleWarnSpy.mockRestore();
+  });
+
   it("simple", () => {
     const modelResult = `
   \`\`\`json
@@ -15,5 +29,16 @@ describe("Strings should be extracted from arrays correctly", () => {
     expect(extractArray(modelResult).at(2)).toBe(
       "Integrate with external tools and services to provide users with additional features such as task prioritization and scheduling."
     );
+  });
+
+  it("should handle invalid JSON gracefully", () => {
+    const invalidJson = '["task 1",]';
+    // This matches the regex but fails JSON.parse
+    expect(extractArray(invalidJson)).toEqual([]);
+  });
+
+  it("should return empty array if no match found", () => {
+    const noMatch = "this is just text with no array";
+    expect(extractArray(noMatch)).toEqual([]);
   });
 });
