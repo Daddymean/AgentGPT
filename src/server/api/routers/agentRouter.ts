@@ -22,20 +22,16 @@ export const agentRouter = createTRPCRouter({
         },
       });
 
-      const all = input.tasks.map((e, i) => {
-        return prisma.agentTask.create({
-          data: {
-            agentId: agent.id,
-            type: e.type,
-            ...(e.type === MESSAGE_TYPE_TASK && { status: e.status }),
-            info: e.info,
-            value: e.value,
-            sort: i,
-          },
-        });
+      await prisma.agentTask.createMany({
+        data: input.tasks.map((e, i) => ({
+          agentId: agent.id,
+          type: e.type,
+          status: e.type === MESSAGE_TYPE_TASK ? e.status : null,
+          info: e.info,
+          value: e.value,
+          sort: i,
+        })),
       });
-
-      await Promise.all(all);
       return agent;
     }),
   getAll: protectedProcedure.query(async ({ ctx }) => {
