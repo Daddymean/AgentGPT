@@ -59,7 +59,7 @@ const Drawer = ({
   }, []);
 
   const sub = api.account.subscribe.useMutation({
-    onSuccess: async (url: any) => {
+    onSuccess: async (url: string | null | undefined) => {
       if (!url) return;
       await router.push(url);
     },
@@ -70,7 +70,7 @@ const Drawer = ({
   });
 
   const manage = api.account.manage.useMutation({
-    onSuccess: async (url: any) => {
+    onSuccess: async (url: string | null | undefined) => {
       if (!url) return;
       await router.push(url);
     },
@@ -113,17 +113,15 @@ const Drawer = ({
             </button>
           </div>
           <ul className="flex flex-col gap-2 overflow-auto">
-            {userAgents.map(
-              (agent: any | undefined, index: any | undefined) => (
-                <DrawerItem
-                  key={index}
-                  icon={<FaRobot />}
-                  text={agent.name}
-                  className="w-full"
-                  onClick={() => void router.push(`/agent?id=${agent.id}`)}
-                />
-              )
-            )}
+            {userAgents.map((agent, index) => (
+              <DrawerItem
+                key={index}
+                icon={<FaRobot />}
+                text={agent.name}
+                className="w-full"
+                onClick={() => void router.push(`/agent?id=${agent.id}`)}
+              />
+            ))}
 
             {status === "unauthenticated" && (
               <div>
@@ -192,7 +190,7 @@ interface DrawerItemProps
   icon: React.ReactNode;
   text: string;
   border?: boolean;
-  onClick?: () => any;
+  onClick?: () => void | Promise<void>;
   className?: string;
   small?: boolean;
 }
@@ -248,8 +246,8 @@ const AuthItem: React.FC<{
 
 const ProItem: React.FC<{
   session: Session | null;
-  sub: () => any;
-  manage: () => any;
+  sub: () => void;
+  manage: () => void;
 }> = ({ sub, manage, session }) => {
   const [t] = useTranslation();
   const text = session?.user?.subscriptionId ? t("Account") : t("Go Pro");
