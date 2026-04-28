@@ -180,9 +180,8 @@ class AutonomousAgent {
       modelSettings: this.modelSettings,
       goal: this.goal,
     };
-    const res = await this.post(`/api/agent/start`, data);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-argument
-    return res.data.newTasks as string[];
+    const res = await this.post<{ newTasks: string[] }>(`/api/agent/start`, data);
+    return res.data.newTasks;
   }
 
   async getAdditionalTasks(
@@ -210,9 +209,8 @@ class AutonomousAgent {
       result: result,
       completedTasks: this.completedTasks,
     };
-    const res = await this.post(`/api/agent/create`, data);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument,@typescript-eslint/no-unsafe-member-access
-    return res.data.newTasks as string[];
+    const res = await this.post<{ newTasks: string[] }>(`/api/agent/create`, data);
+    return res.data.newTasks;
   }
 
   async executeTask(task: string): Promise<string> {
@@ -229,14 +227,13 @@ class AutonomousAgent {
       goal: this.goal,
       task: task,
     };
-    const res = await this.post("/api/agent/execute", data);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-argument
-    return res.data.response as string;
+    const res = await this.post<{ response: string }>("/api/agent/execute", data);
+    return res.data.response;
   }
 
-  private async post(url: string, data: RequestBody) {
+  private async post<T = any>(url: string, data: RequestBody) {
     try {
-      return await axios.post(url, data);
+      return await axios.post<T>(url, data);
     } catch (e) {
       this.shutdown();
 
