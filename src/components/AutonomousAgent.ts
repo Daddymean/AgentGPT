@@ -84,9 +84,6 @@ class AutonomousAgent {
   }
 
   async loop() {
-    console.log(`Loop ${this.numLoops}`);
-    console.log(this.tasks);
-
     if (!this.isRunning) {
       return;
     }
