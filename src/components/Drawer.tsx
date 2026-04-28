@@ -17,6 +17,7 @@ import {
 import clsx from "clsx";
 import { useAuth } from "../hooks/useAuth";
 import type { Session } from "next-auth";
+import type { Agent } from "@prisma/client";
 import { env } from "../env/client.mjs";
 import { api } from "../utils/api";
 import { useRouter } from "next/router";
@@ -114,7 +115,7 @@ const Drawer = ({
           </div>
           <ul className="flex flex-col gap-2 overflow-auto">
             {userAgents.map(
-              (agent: any | undefined, index: any | undefined) => (
+              (agent: Agent, index: number) => (
                 <DrawerItem
                   key={index}
                   icon={<FaRobot />}
