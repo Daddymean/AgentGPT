@@ -1,4 +1,3 @@
-import React from "react";
 import { useTranslation } from "next-i18next";
 import { FaDiscord, FaGithub, FaTwitter } from "react-icons/fa";
 import Dialog from "./Dialog";
