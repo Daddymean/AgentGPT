@@ -10,7 +10,7 @@ import { createTRPCNext } from "@trpc/next";
 import { type inferRouterInputs, type inferRouterOutputs } from "@trpc/server";
 import superjson from "superjson";
 
-import { type AppRouter } from "../server/api/root";
+import { type appRouter } from "../server/api/root";
 
 const getBaseUrl = () => {
   if (typeof window !== "undefined") return ""; // browser should use relative url
@@ -21,7 +21,7 @@ const getBaseUrl = () => {
 /**
  * A set of typesafe react-query hooks for your tRPC API
  */
-export const api = createTRPCNext<AppRouter>({
+export const api = createTRPCNext<typeof appRouter>({
   config() {
     return {
       /**
@@ -57,9 +57,9 @@ export const api = createTRPCNext<AppRouter>({
  * Inference helper for inputs
  * @example type HelloInput = RouterInputs['example']['hello']
  **/
-export type RouterInputs = inferRouterInputs<AppRouter>;
+export type RouterInputs = inferRouterInputs<typeof appRouter>;
 /**
  * Inference helper for outputs
  * @example type HelloOutput = RouterOutputs['example']['hello']
  **/
-export type RouterOutputs = inferRouterOutputs<AppRouter>;
+export type RouterOutputs = inferRouterOutputs<typeof appRouter>;
